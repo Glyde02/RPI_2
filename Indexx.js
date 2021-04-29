@@ -7,7 +7,12 @@ const
     arrow = document.getElementById('rightArrow'),
     quote = document.getElementById('quote'),
     quoteRefresh = document.getElementById('newQuote'),
-    weather = document.getElementById('weather');
+    city = document.getElementById('city'),
+    temp = document.getElementById('temp'),
+    condition = document.getElementById('condition'),
+    humidity = document.getElementById('humidity'),
+    wind = document.getElementById('wind'),
+    icon = document.getElementById('icon');
 
 const
     arr_month = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"],
@@ -22,6 +27,7 @@ function showTime()
         dayWeek = today.getDay(),
         day = today.getDate(),
         month = today.getMonth();
+
 
 
     if (min === 0 && sec === 0)
@@ -118,7 +124,7 @@ function setNextBackground() {
 
 //------------------------------------------
 
-var buff_text;
+let buff_text;
 
 function getName(){
     if (localStorage.getItem('name') === null) {
@@ -131,7 +137,7 @@ function getName(){
 }
 function setName(e){
     if (e.type === 'keypress'){
-        if (e.keyCode == 13)
+        if (e.keyCode === 13)
         {
             localStorage.setItem('name', e.target.innerHTML);
             name.blur();
@@ -156,7 +162,7 @@ function getFocus(){
 }
 function setFocus(e){
     if (e.type === 'keypress'){
-        if (e.keyCode == 13)
+        if (e.keyCode === 13)
         {
             localStorage.setItem('focus', e.target.innerHTML);
             focus.blur();
@@ -171,20 +177,17 @@ function setFocus(e){
 }
 
 
-
-
-
 showTime();
 prepareBackground();
 getName();
 getFocus();
 
 
-name.addEventListener('click', () => {buff_text = name.innerHTML; name.innerHTML = '';})
+name.addEventListener('click', () => {if (name.innerHTML !== '') {buff_text = name.innerHTML; name.innerHTML = '';}});
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
 
-focus.addEventListener('click', () => {buff_text = focus.innerHTML; focus.innerHTML = '';})
+focus.addEventListener('click', () => {if (focus.innerHTML !== '') {buff_text = focus.innerHTML; focus.innerHTML = '';}});
 focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
 
@@ -222,37 +225,36 @@ async function getQuote() {
 }
 
 
-
 document.addEventListener('DOMContentLoaded', getQuote);
 quoteRefresh.addEventListener('click', getQuote);
 
 //-------------------------
 
-var buff_city;
+let buff_city;
 
-function getWeather(){
+function getCity(){
     if (localStorage.getItem('city_name') === null) {
-        weather.textContent = '[Enter City]';
+        city.textContent = '[Enter City]';
     }
     else
     {
-        weather.textContent = localStorage.getItem('city_name');
+        city.textContent = localStorage.getItem('city_name');
     }
 }
-function setWeather(e){
+function setCity(e){
     if (e.type === 'keypress'){
         if (e.keyCode == 13)
         {
             localStorage.setItem('city_name', e.target.innerHTML);
 
             getWeatherInfo();
-            weather.blur();
+            city.blur();
         }
     }
     else
     {
-        if (weather.innerHTML === '')
-            weather.innerHTML = buff_city;
+        if (city.innerHTML === '')
+            city.innerHTML = buff_city;
         localStorage.setItem('city_name', e.target.innerHTML);
     }
 }
@@ -262,27 +264,32 @@ async function getWeatherInfo(){
     const res = await fetch(url);
 
     if (!res.ok) {
-        weather.textContent = 'Incorrect city name';
+        icon.className = 'weather-icon owf';
+        city.textContent = 'Incorrect city name';
+        temp.innerHTML = ``;
+        condition.textContent =  ``;
+        humidity.innerHTML = ``;
+        wind.innerHTML = ``;
         return;
     }
-    localStorage.setItem('city_name', weather.textContent);
+    localStorage.setItem('city_name', city.textContent);
 
 
     const info = await res.json();
-    weather.innerHTML = `${info.main.temp} se`;
+    temp.innerHTML = `Температура - ${info.main.temp}°C`;
+    condition.textContent =  info.weather[0].description[0].toUpperCase() + info.weather[0].description.substring(1);
+    humidity.innerHTML = `Влажность - ${info.main.humidity}%`;
+    wind.innerHTML = `Ветер - ${info.wind.speed} м/с`;
 
-//    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+    icon.className = 'weather-icon owf';
+    icon.classList.add(`owf-${info.weather[0].id}`);
 
-//    temperature.textContent = `${data.main.temp}°C`;
-//    weatherDescription.textContent = data.weather[0].description;
-//    humidity.innerHTML = `${data.main.humidity}%`;
-//    wind.innerHTML = `${data.wind.speed} m/s`;
 }
 
-getWeather();
+getCity();
 getWeatherInfo();
 
-weather.addEventListener('click', () => {buff_city = weather.innerHTML; weather.innerHTML = '';})
-weather.addEventListener('keypress', setWeather);
-weather.addEventListener('blur', setWeather);
+city.addEventListener('click',() => { if (city.innerHTML !== ''){buff_city = city.innerHTML; city.innerHTML = '';}});
+city.addEventListener('keypress', setCity);
+city.addEventListener('blur', setCity);
 

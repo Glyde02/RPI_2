@@ -10,9 +10,19 @@ body {
     transition: background-image 1s ease-in-out;
 
     background-size: cover;
-    background-image: url(img/day/01.jpg);
+
+
+    text-shadow: 1px 1px 2px black;
 }
 
+#overlay{
+    z-index: -5;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: url("img/overlay.png") center no-repeat;
+    background-size: cover;
+}
 
 
 
@@ -23,13 +33,27 @@ body {
 }
 
 
-#weather{
+
+.weather_{
     right: 5px;
     top: 10px;
     position: absolute;
     height: 10%;
-    width: 10%;
+    width: 25%;
     text-align: right;
+}
+
+#weather_info{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+#city{
+    font-size: 25px;
+}
+#icon{
+    right: 50px;
+    font-size: 25px;
 }
 
 #time{
@@ -72,22 +96,35 @@ body {
     background-size: cover;
 
     border: 0;
+    transition: linear 0.1s;
+}
+#rightArrow:hover{
+
+    cursor: pointer;
+    transform: scale(1.2);
 }
 
 #quote {
     position: absolute;
-    bottom: 15px;
+    bottom: 20px;
 }
 #newQuote{
     position: absolute;
 
-    right: 0;
-    bottom: 0;
-    height: 4%;
-    width: 4%;
+    right: 10px;
+    bottom: 10px;
+    height: 30px;
+    width: 30px;
     background: url("../css/refresh.png") center no-repeat;
     background-size: contain;
 
 
     border: 0;
+
+    transition: linear 0.4s;
+}
+
+#newQuote:hover{
+    cursor: pointer;
+    transform: rotate(180deg);
 }
