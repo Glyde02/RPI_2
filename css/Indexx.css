@@ -1,0 +1,93 @@
+body {
+    font-family: 'Comfortaa', cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    color: white;
+    transition: background-image 1s ease-in-out;
+
+    background-size: cover;
+    background-image: url(img/day/01.jpg);
+}
+
+
+
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+
+#weather{
+    right: 5px;
+    top: 10px;
+    position: absolute;
+    height: 10%;
+    width: 10%;
+    text-align: right;
+}
+
+#time{
+    font-size: 100px;
+}
+#date{
+    margin-top: 0px;
+    font-size: 25px;
+}
+
+#greetings{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#name{
+
+}
+#text {
+    margin-bottom: 10px;
+    opacity: 0.7;
+}
+
+#arrows {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: normal;
+
+
+}
+#rightArrow {
+    position: absolute;
+    right: 5px;
+    height: 70px;
+    width: 50px;
+    background: url("../css/right_arrow.png") center no-repeat;
+    background-size: cover;
+
+    border: 0;
+}
+
+#quote {
+    position: absolute;
+    bottom: 15px;
+}
+#newQuote{
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+    height: 4%;
+    width: 4%;
+    background: url("../css/refresh.png") center no-repeat;
+    background-size: contain;
+
+
+    border: 0;
+}
